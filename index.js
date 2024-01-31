@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const { connectMongoDb } = require('./connection');
-const { restrictToLoggedInUserOnly, checkAuth } = require("./middleware/auth")
+const { allowedTo,checkForAuthentication } = require("./middleware/auth")
 const url = require('./models/url');
 
 const urlRoute = require("./router/url")
@@ -20,18 +20,14 @@ app.set('views', path.resolve('./views'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(checkForAuthentication);
 
-app.use("/url", restrictToLoggedInUserOnly, urlRoute);//this is done so that we define the /url by default for every other route and need not to write it in evey other route
+app.use("/url",allowedTo(["NORMAL"]), urlRoute);//this is done so that we define the /url by default for every other route and need not to write it in evey other route
 
 app.use("/user", userRoute);
-app.use("/", checkAuth, staticRoute);
+app.use("/",  staticRoute);
 
-// app.get("/test", async (req, res) => {
-//     const allUrls = await url.find({});
-//     return res.render('home', {
-//         urls: allUrls
-//     });
-// })
+
 
 app.get("/url/:shortId", async (req, res) => {
     const shortId = req.params.shortId;

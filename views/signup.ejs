@@ -25,6 +25,9 @@
         <input type="text" name="password" placeholder="Password" />
         <button type="submit">Sign Up</button>
     </form>
+    <% if (locals.msg) { %>
+        <h1><%= msg %></h1>
+    <% } %>
 </body>
 
 </html>
