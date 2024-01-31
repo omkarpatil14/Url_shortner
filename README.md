@@ -31,7 +31,7 @@ To run this project locally, follow these steps:
 2. Navigate to the project directory:
 
     ```bash
-    cd url-shortener
+    cd URL_Shortne
     ```
 
 3. Install dependencies:
@@ -43,7 +43,7 @@ To run this project locally, follow these steps:
 4. Run the application:
 
     ```bash
-    npm start
+    npm run dev
     ```
 
 ## Technologies Used
